@@ -2,6 +2,25 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task5()
+{
+	puts("\nЗадание 5");
+	int n = 10;
+	printf("Последовательная область. n = %d\n", n);
+#pragma omp parallel num_threads(2) private(n)
+	{
+		// приватная для каждого потока
+		int thread_num = omp_get_thread_num();
+		printf("Параллельная область. Поток №%d, n = %d\n", thread_num,
+		       n);
+
+		n = thread_num;
+		printf("Параллельная область. Поток №%d, n = %d\n", thread_num,
+		       n);
+	}
+	printf("Последовательная область. n = %d\n", n);
+}
+
 static void task4()
 {
 	puts("\nЗадание 4");
@@ -118,5 +137,6 @@ int main()
 	task3();
 	task3_nowait();
 	task4();
+	task5();
 	return 0;
 }
