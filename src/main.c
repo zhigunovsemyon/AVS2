@@ -2,6 +2,25 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task4()
+{
+	puts("\nЗадание 4");
+#pragma omp parallel num_threads(3)
+	{
+		puts("Начало");
+
+#pragma omp master
+		printf("Главный поток №%d\n", omp_get_thread_num());
+
+		puts("Середина");
+
+#pragma omp master
+		printf("Главный поток №%d\n", omp_get_thread_num());
+
+		puts("Конец");
+	}
+}
+
 static void task3()
 {
 	puts("\nЗадание 3");
@@ -15,6 +34,7 @@ static void task3()
 		printf("Окончание %d\n", omp_get_thread_num());
 	}
 }
+
 static void task3_nowait()
 {
 	puts("\nЗадание 3");
@@ -97,5 +117,6 @@ int main()
 	task2();
 	task3();
 	task3_nowait();
+	task4();
 	return 0;
 }
