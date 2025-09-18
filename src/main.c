@@ -2,6 +2,33 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task3()
+{
+	puts("\nЗадание 3");
+#pragma omp parallel num_threads(3)
+	{
+		printf("Начало %d\n", omp_get_thread_num());
+
+#pragma omp single
+		printf("Один поток %d\n", omp_get_thread_num());
+
+		printf("Окончание %d\n", omp_get_thread_num());
+	}
+}
+static void task3_nowait()
+{
+	puts("\nЗадание 3");
+#pragma omp parallel num_threads(3)
+	{
+		printf("Начало %d\n", omp_get_thread_num());
+
+#pragma omp single nowait
+		printf("Один поток nowait %d\n", omp_get_thread_num());
+
+		printf("Окончание %d\n", omp_get_thread_num());
+	}
+}
+
 static void task2()
 {
 	puts("\nЗадание 2");
@@ -40,7 +67,6 @@ static double task1_parallel(double a, double b, int64_t iter_count)
 			foo = a * b;
 			(void)foo;
 		}
-
 	}
 
 	return omp_get_wtime() - start_time;
@@ -69,5 +95,7 @@ int main()
 {
 	task1(4 * (int64_t)UINT32_MAX);
 	task2();
+	task3();
+	task3_nowait();
 	return 0;
 }
