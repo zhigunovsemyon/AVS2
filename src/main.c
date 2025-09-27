@@ -2,6 +2,27 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task6()
+{
+	puts("\nЗадание 6");
+	int m[5] = {};
+
+	puts("Перед параллельной областью:");
+	for (size_t i = 0; i < sizeof(m)/sizeof(*m); ++i)
+		printf("m[%lu] = %d; ", i, m[i]);
+	putchar('\n');
+
+#pragma omp parallel num_threads(2)
+	{
+		m[omp_get_thread_num()] = 1;
+	}
+
+	puts("После параллельной области:");
+	for (size_t i = 0; i < sizeof(m)/sizeof(*m); ++i)
+		printf("m[%lu] = %d; ", i, m[i]);
+	putchar('\n');
+}
+
 static void task5()
 {
 	puts("\nЗадание 5");
@@ -138,5 +159,6 @@ int main()
 	task3_nowait();
 	task4();
 	task5();
+	task6();
 	return 0;
 }
