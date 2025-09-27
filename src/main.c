@@ -2,13 +2,24 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task7()
+{
+	puts("\nЗадание 7");
+	int var = 0;
+#pragma omp parallel reduction(+:var)
+	{
+		var = 1;
+	}
+	printf("var = %d\n", var);
+}
+
 static void task6()
 {
 	puts("\nЗадание 6");
 	int m[5] = {};
 
 	puts("Перед параллельной областью:");
-	for (size_t i = 0; i < sizeof(m)/sizeof(*m); ++i)
+	for (size_t i = 0; i < sizeof(m) / sizeof(*m); ++i)
 		printf("m[%lu] = %d; ", i, m[i]);
 	putchar('\n');
 
@@ -18,7 +29,7 @@ static void task6()
 	}
 
 	puts("После параллельной области:");
-	for (size_t i = 0; i < sizeof(m)/sizeof(*m); ++i)
+	for (size_t i = 0; i < sizeof(m) / sizeof(*m); ++i)
 		printf("m[%lu] = %d; ", i, m[i]);
 	putchar('\n');
 }
@@ -160,5 +171,6 @@ int main()
 	task4();
 	task5();
 	task6();
+	task7();
 	return 0;
 }
