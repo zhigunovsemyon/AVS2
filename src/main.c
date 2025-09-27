@@ -2,6 +2,19 @@
 #include <stdint.h>
 #include <stdio.h>
 
+static void task8()
+{
+	puts("\nЗадание 8");
+	int var = 0;
+#pragma omp parallel num_threads(4) reduction(+:var)
+	{
+		var += omp_get_thread_num();
+		printf("var = %d, thread_num = %d\n", var, omp_get_thread_num());
+	}
+	printf("var = %d\n", var);
+
+}
+
 static void task7()
 {
 	puts("\nЗадание 7");
@@ -9,6 +22,7 @@ static void task7()
 #pragma omp parallel reduction(+:var)
 	{
 		var = 1;
+		printf("var = %d, thread_num = %d\n", var, omp_get_thread_num());
 	}
 	printf("var = %d\n", var);
 }
@@ -172,5 +186,6 @@ int main()
 	task5();
 	task6();
 	task7();
+	task8();
 	return 0;
 }
